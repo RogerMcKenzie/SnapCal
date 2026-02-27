@@ -26,7 +26,7 @@
   },
   "options_page": "src/options/index.html",
   "oauth2": {
-    "client_id": "YOUR_CLIENT_ID.apps.googleusercontent.com",
+    "client_id": "1079636021022-72p2ikr4dko4e11kvpc75j2b3l2k6244.apps.googleusercontent.com",
     "scopes": [
       "https://www.googleapis.com/auth/calendar.events"
     ]
@@ -35,5 +35,14 @@
     "16": "icons/icon16.png",
     "48": "icons/icon48.png",
     "128": "icons/icon128.png"
+  },
+  "commands": {
+    "snap_analyze": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Snap page and analyze with AI"
+    }
   }
 }

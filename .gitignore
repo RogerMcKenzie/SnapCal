@@ -25,5 +25,11 @@ Thumbs.db
 # Vite
 vite.config.ts.timestamp-*
 
+# Google OAuth credentials
+client_secret_*.json
+
 # Claude / AI tooling
 .claude/
+
+# Cursor IDE
+.cursor/
