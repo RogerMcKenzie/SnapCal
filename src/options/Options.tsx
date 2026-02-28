@@ -2,8 +2,6 @@ import { useEffect, useState } from "react";
 import { getSettings, saveSettings } from "../lib/storage";
 
 export function Options() {
-  const [apiKey, setApiKey] = useState("");
-  const [model, setModel] = useState("gemini-2.5-flash");
   const [duration, setDuration] = useState(60);
   const [timezone, setTimezone] = useState(
     Intl.DateTimeFormat().resolvedOptions().timeZone,
@@ -12,8 +10,6 @@ export function Options() {
 
   useEffect(() => {
     getSettings().then((s) => {
-      setApiKey(s.geminiApiKey);
-      setModel(s.geminiModel);
       setDuration(s.defaultDuration);
       setTimezone(s.timezone);
     });
@@ -22,8 +18,6 @@ export function Options() {
   async function handleSave(e: React.FormEvent) {
     e.preventDefault();
     await saveSettings({
-      geminiApiKey: apiKey.trim(),
-      geminiModel: model,
       defaultDuration: duration,
       timezone,
     });
@@ -36,24 +30,6 @@ export function Options() {
       <h1>SnapCal Settings</h1>
 
       <form className="options-form" onSubmit={handleSave}>
-        <label>
-          Gemini API Key
-          <input
-            type="password"
-            value={apiKey}
-            onChange={(e) => setApiKey(e.target.value)}
-            placeholder="Enter your Gemini API key"
-          />
-        </label>
-
-        <label>
-          Gemini Model
-          <select value={model} onChange={(e) => setModel(e.target.value)}>
-            <option value="gemini-2.5-pro">Gemini 2.5 Pro</option>
-            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
-          </select>
-        </label>
-
         <label>
           Default Event Duration (minutes)
           <input

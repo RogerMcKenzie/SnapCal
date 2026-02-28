@@ -10,7 +10,7 @@
     "scripting"
   ],
   "host_permissions": [
-    "https://generativelanguage.googleapis.com/*",
+    "https://snapcal-proxy.vercel.app/*",
     "https://www.googleapis.com/*"
   ],
   "background": {

@@ -1,8 +1,8 @@
 import type { EventDetails } from "../types";
-import { getSettings } from "./storage";
 import { sanitize, truncateForAPI } from "./utils";
 
-const API_BASE = "https://generativelanguage.googleapis.com/v1beta/models";
+// TODO: Replace with your actual Vercel deployment URL after deploying
+const PROXY_URL = "https://snapcal-proxy.vercel.app/api/gemini";
 
 function buildPrompt(extra: string): string {
   const today = new Date().toISOString().split("T")[0];
@@ -26,16 +26,6 @@ async function callGemini(
   contents: unknown[],
   retries = 2,
 ): Promise<EventDetails> {
-  const { geminiApiKey, geminiModel } = await getSettings();
-  if (!geminiApiKey) {
-    throw new Error(
-      "Gemini API key not configured. Open extension options to set it.",
-    );
-  }
-
-  const model = geminiModel || "gemini-2.5-flash";
-  const url = `${API_BASE}/${model}:generateContent?key=${geminiApiKey}`;
-
   const body = JSON.stringify({
     contents: [{ parts: contents }],
     generationConfig: {
@@ -48,7 +38,7 @@ async function callGemini(
 
   for (let attempt = 0; attempt <= retries; attempt++) {
     try {
-      const response = await fetch(url, {
+      const response = await fetch(PROXY_URL, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body,
@@ -104,7 +94,7 @@ function parseAndValidate(raw: string): EventDetails {
       : new Date().toISOString().split("T")[0];
   const startTime =
     typeof parsed.startTime === "string" &&
-    /^\d{2}:\d{2}$/.test(parsed.startTime)
+      /^\d{2}:\d{2}$/.test(parsed.startTime)
       ? parsed.startTime
       : null;
   const endTime =
@@ -131,23 +121,23 @@ function mapApiError(status: number, msg: string): Error {
   switch (status) {
     case 400:
       return new Error(
-        "Bad request to Gemini API. The content may be too long or unsupported.",
+        "Invalid request. The content may be too long or unsupported.",
       );
     case 401:
       return new Error(
-        "Invalid Gemini API key. Check your key in extension options.",
+        "Authentication error. Please contact support.",
       );
     case 403:
       return new Error(
-        "Gemini API access denied. Verify the API is enabled and billing is active.",
+        "API access denied. Please contact support.",
       );
     case 429:
       return new Error(
-        "Gemini API rate limit exceeded. Please wait and try again.",
+        "Rate limit exceeded. Please wait and try again.",
       );
     case 500:
     case 503:
-      return new Error("Gemini API is temporarily unavailable. Try again later.");
+      return new Error("Service temporarily unavailable. Try again later.");
     default:
       return new Error(`Gemini API error (${status}): ${msg}`);
   }

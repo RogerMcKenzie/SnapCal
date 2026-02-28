@@ -1,8 +1,6 @@
 import type { StorageSettings } from "../types";
 
 const DEFAULTS: StorageSettings = {
-  geminiApiKey: "",
-  geminiModel: "gemini-2.5-flash",
   defaultDuration: 60,
   timezone: Intl.DateTimeFormat().resolvedOptions().timeZone,
 };

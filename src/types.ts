@@ -9,8 +9,6 @@ export interface EventDetails {
 }
 
 export interface StorageSettings {
-  geminiApiKey: string;
-  geminiModel: string;
   defaultDuration: number; // minutes
   timezone: string;
 }
