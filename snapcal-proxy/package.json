@@ -4,5 +4,8 @@
     "private": true,
     "dependencies": {
         "@vercel/node": "^3.0.0"
+    },
+    "scripts": {
+        "dev": "vercel dev"
     }
 }

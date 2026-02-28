@@ -28,8 +28,8 @@ vite.config.ts.timestamp-*
 # Google OAuth credentials
 client_secret_*.json
 
-# Claude / AI tooling
-.claude/
+# Local settings
+settings.local.json
 
-# Cursor IDE
-.cursor/
+# Manifest
+manifest.json
